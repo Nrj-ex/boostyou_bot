@@ -1,5 +1,3 @@
-import time
-import random
 import json
 import csv
 import sqlite3 as sql
@@ -57,48 +55,6 @@ def save_csv(file_name, data):
     with open(file_name, 'a', newline='') as f:
         writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
         writer.writerow(data)
-
-
-def sit_up(work_time):
-    for i in range(work_time):
-        time.sleep(1)
-        return 'Выпрями спину'
-
-
-def work_duration():
-    print('Сколько часов будет работать мой господин?\n')
-    work_duration = 0
-    while True:
-        answer = input().split()
-        for i in answer:
-            if i.isdigit():
-                work_duration = round(float(i))
-                break
-        if work_duration > 0:
-            return work_duration
-        print('Не понял ты не русский что ли? Спрашиваю сколько пахать будешь?')
-
-
-def random_workout():
-    workout_list = ['отжимания', 'подтягивания', 'приседания', 'пресс']
-
-    def choice_workout(list):
-        workout = random.choice(list)
-        if workout == 'отжимания' or workout == 'приседания':
-            count = random.randint(10, 40)
-        elif workout == 'подтягивания':
-            count = random.randint(4, 9)
-        elif workout == 'пресс':
-            count = random.randint(10, 20)
-        else:
-            count = random.randint(1, 20)
-        return workout, count
-
-    # print(choice_workout(workout_list))
-    workout, count = choice_workout(workout_list)
-    # print('Упражнение: {} - {} повт.'.format(workout, count))
-    return 'Упражнение: {} - {} повт.'.format(workout, count)
-
 
 
 def get_name(data):

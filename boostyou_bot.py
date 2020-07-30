@@ -1,8 +1,5 @@
 import telebot
 from bot_function import search_workout
-# from telebot import types
-# import time
-from bot_function import random_workout
 from bot_function import get_my_stat
 from bot_function import get_all_stats
 import config
@@ -44,22 +41,6 @@ def show_all_stats(message):
         for workout in all_stats[name]:
             text_message += f'{workout}: {all_stats[name][workout]}\n'
     bot.send_message(message.chat.id, text_message)
-
-
-# @bot.message_handler(commands=['sit_up'])
-# def start(message):
-#     bot.send_message(message.from_user.id, 'Сиди ровно кожаный ублюдок, я слежу за тобой!')
-#     for i in range(5):
-#         time.sleep(10)
-#         bot.send_message(message.from_user.id, 'Выпрямил спину ублюдок!')
-
-
-# @bot.message_handler(commands=['random_workout'])
-# def start(message):
-#     bot.send_message(message.from_user.id, 'Ну че будем тренить? (иногда...)')
-#     for i in range(5):
-#         time.sleep(1)
-#         bot.send_message(message.from_user.id, random_workout())
 
 
 @bot.message_handler(content_types=["text"])
