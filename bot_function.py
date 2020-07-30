@@ -2,6 +2,7 @@ import time
 import random
 import json
 import csv
+import sqlite3 as sql
 import config
 
 file_name = config.FILE_NAME
@@ -40,8 +41,16 @@ def search_workout(message):
 
                         print(save_data)
                         save_csv('scoring.csv', save_data)
+                        save_db(config.DB_NAME, save_data)
 
 
+def save_db(db_name, data):
+    # коннект к бд
+    conn = sql.connect(db_name)
+    cursor = conn.cursor()
+    cursor.execute(f"INSERT INTO `scoring` VALUES ('{data[0]}', "
+                   f"'{data[1]}', {data[2]}, {data[3]}, {data[4]})")
+    conn.commit()
 
 
 def save_csv(file_name, data):
