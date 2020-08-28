@@ -88,6 +88,7 @@ def get_my_stat(name, db_name=DB_NAME):
         result[i[0]] = i[1]
     return result
 
+
 def get_my_stat_old(name, data=scoring):
     stat = {}
     for i in data:
@@ -99,12 +100,23 @@ def get_my_stat_old(name, data=scoring):
     return stat
 
 
-def get_all_stats(file=file_name):
+def get_all_stats(db_name=DB_NAME):
+    conn = sql.connect(db_name)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT nickname FROM scoring GROUP BY nickname")
+    names = cursor.fetchall()
+    all_stats = {}
+    for name in names:
+        print(name[0])
+        all_stats[name[0]] = get_my_stat(name[0])
+    return all_stats
+
+def get_all_stats_old(file=file_name):
     data = get_scoring(file)
     names = get_name(data)
     all_stats = {}
     for name in names:
-        all_stats[name] = get_my_stat(name, data)
+        all_stats[name] = get_my_stat_old(name, data)
     return all_stats
 
 
