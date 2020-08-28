@@ -1,5 +1,5 @@
 import json
-import csv
+# import csv
 import sqlite3 as sql
 import config
 
@@ -39,7 +39,7 @@ def search_workout(message):
                         # сделать сохранение
 
                         print(save_data)
-                        save_csv('scoring.csv', save_data)
+                        # save_csv('scoring.csv', save_data)
                         save_db(DB_NAME, save_data)
 
 
@@ -52,29 +52,29 @@ def save_db(db_name, data):
     conn.commit()
 
 
-def save_csv(file_name, data):
-    with open(file_name, 'a', newline='') as f:
-        writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
-        writer.writerow(data)
+# def save_csv(file_name, data):
+#     with open(file_name, 'a', newline='') as f:
+#         writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
+#         writer.writerow(data)
 
 
-def get_name(data):
-    names = []
-    for i in data:
-        names.append(i[0])
-    return set(names)
+# def get_name(data):
+#     names = []
+#     for i in data:
+#         names.append(i[0])
+#     return set(names)
 
 
-def get_scoring(file):
-    data = []
-    with open(file, 'r') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            data.append(row)
-    return data
+# def get_scoring(file):
+#     data = []
+#     with open(file, 'r') as f:
+#         reader = csv.reader(f)
+#         for row in reader:
+#             data.append(row)
+#     return data
 
 
-scoring = get_scoring(file_name)
+# scoring = get_scoring(file_name)
 
 
 def get_my_stat(name, db_name=DB_NAME):
@@ -89,15 +89,15 @@ def get_my_stat(name, db_name=DB_NAME):
     return result
 
 
-def get_my_stat_old(name, data=scoring):
-    stat = {}
-    for i in data:
-        if i[0] == name:
-            if i[1] in stat:
-                stat[i[1]] += int(i[2])
-            else:
-                stat[i[1]] = int(i[2])
-    return stat
+# def get_my_stat_old(name, data=scoring):
+#     stat = {}
+#     for i in data:
+#         if i[0] == name:
+#             if i[1] in stat:
+#                 stat[i[1]] += int(i[2])
+#             else:
+#                 stat[i[1]] = int(i[2])
+#     return stat
 
 
 def get_all_stats(db_name=DB_NAME):
@@ -111,13 +111,13 @@ def get_all_stats(db_name=DB_NAME):
         all_stats[name[0]] = get_my_stat(name[0])
     return all_stats
 
-def get_all_stats_old(file=file_name):
-    data = get_scoring(file)
-    names = get_name(data)
-    all_stats = {}
-    for name in names:
-        all_stats[name] = get_my_stat_old(name, data)
-    return all_stats
+# def get_all_stats_old(file=file_name):
+#     data = get_scoring(file)
+#     names = get_name(data)
+#     all_stats = {}
+#     for name in names:
+#         all_stats[name] = get_my_stat_old(name, data)
+#     return all_stats
 
 
 
