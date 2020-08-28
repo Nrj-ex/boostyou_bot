@@ -3,6 +3,7 @@ import csv
 import sqlite3 as sql
 import config
 
+DB_NAME = config.DB_NAME
 file_name = config.FILE_NAME
 with open('workout.json', 'r', encoding="utf-8") as f:
     workout_bd = json.load(f)
@@ -39,7 +40,7 @@ def search_workout(message):
 
                         print(save_data)
                         save_csv('scoring.csv', save_data)
-                        save_db(config.DB_NAME, save_data)
+                        save_db(DB_NAME, save_data)
 
 
 def save_db(db_name, data):
@@ -76,7 +77,18 @@ def get_scoring(file):
 scoring = get_scoring(file_name)
 
 
-def get_my_stat(name, data=scoring):
+def get_my_stat(name, db_name=DB_NAME):
+    conn = sql.connect(db_name)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT workout, SUM(count) "
+                   f"FROM scoring where nickname = '{name}' GROUP BY workout")
+    results = cursor.fetchall()
+    result = {}
+    for i in results:
+        result[i[0]] = i[1]
+    return result
+
+def get_my_stat_old(name, data=scoring):
     stat = {}
     for i in data:
         if i[0] == name:
