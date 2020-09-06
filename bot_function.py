@@ -1,6 +1,7 @@
 import json
 import sqlite3 as sql
 import config
+import time
 
 DB_NAME = config.DB_NAME
 file_name = config.FILE_NAME
@@ -67,6 +68,30 @@ def get_all_stats(db_name=DB_NAME):
     for name in names:
         print(name[0])
         all_stats[name[0]] = get_my_stat(name[0])
+    return all_stats
+
+
+def get_my_stat_week(name, db_name=DB_NAME):
+    conn = sql.connect(db_name)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT workout, SUM(count) FROM scoring "
+                   f"WHERE nickname = '{name}' and time >= {int(time.time())-604800} GROUP BY workout")
+    results = cursor.fetchall()
+    result = {}
+    for i in results:
+        result[i[0]] = i[1]
+    return result
+
+
+def get_all_stats_week(db_name=DB_NAME):
+    conn = sql.connect(db_name)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT nickname FROM scoring GROUP BY nickname")
+    names = cursor.fetchall()
+    all_stats = {}
+    for name in names:
+        print(name[0])
+        all_stats[name[0]] = get_my_stat_week(name[0])
     return all_stats
 
 
