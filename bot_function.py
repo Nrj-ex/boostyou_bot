@@ -80,6 +80,8 @@ def get_my_stat_week(name, db_name=DB_NAME):
     result = {}
     for i in results:
         result[i[0]] = i[1]
+    if not result:
+        result['Ленивая'] = 'ЖОПА!'
     return result
 
 
