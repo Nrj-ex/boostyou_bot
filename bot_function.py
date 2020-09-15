@@ -47,35 +47,12 @@ def save_db(db_name, data):
     conn.commit()
 
 
-def get_my_stat(name, db_name=DB_NAME):
+def get_my_stat(name, time_slot=None, db_name=DB_NAME):
     conn = sql.connect(db_name)
     cursor = conn.cursor()
-    cursor.execute(f"SELECT workout, SUM(count) "
-                   f"FROM scoring where nickname = '{name}' GROUP BY workout")
-    results = cursor.fetchall()
-    result = {}
-    for i in results:
-        result[i[0]] = i[1]
-    return result
-
-
-def get_all_stats(db_name=DB_NAME):
-    conn = sql.connect(db_name)
-    cursor = conn.cursor()
-    cursor.execute(f"SELECT nickname FROM scoring GROUP BY nickname")
-    names = cursor.fetchall()
-    all_stats = {}
-    for name in names:
-        print(name[0])
-        all_stats[name[0]] = get_my_stat(name[0])
-    return all_stats
-
-
-def get_my_stat_week(name, time_slot=604800, db_name=DB_NAME):
-    conn = sql.connect(db_name)
-    cursor = conn.cursor()
-    time_slot = time_slot
     time_now = int(time.time())
+    if not time_slot:
+        time_slot = time_now
     cursor.execute(f"SELECT workout, SUM(count) FROM scoring "
                    f"WHERE nickname = '{name}' and time >= {time_now - time_slot} GROUP BY workout")
     results = cursor.fetchall()
@@ -87,7 +64,7 @@ def get_my_stat_week(name, time_slot=604800, db_name=DB_NAME):
     return result
 
 
-def get_all_stats_week(db_name=DB_NAME):
+def get_all_stats(time_slot=None, db_name=DB_NAME):
     conn = sql.connect(db_name)
     cursor = conn.cursor()
     cursor.execute(f"SELECT nickname FROM scoring GROUP BY nickname")
@@ -95,8 +72,10 @@ def get_all_stats_week(db_name=DB_NAME):
     all_stats = {}
     for name in names:
         print(name[0])
-        all_stats[name[0]] = get_my_stat_week(name[0])
+        all_stats[name[0]] = get_my_stat(name[0], time_slot)
     return all_stats
+
+
 
 
 
