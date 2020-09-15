@@ -71,11 +71,13 @@ def get_all_stats(db_name=DB_NAME):
     return all_stats
 
 
-def get_my_stat_week(name, db_name=DB_NAME):
+def get_my_stat_week(name, time_slot=604800, db_name=DB_NAME):
     conn = sql.connect(db_name)
     cursor = conn.cursor()
+    time_slot = time_slot
+    time_now = int(time.time())
     cursor.execute(f"SELECT workout, SUM(count) FROM scoring "
-                   f"WHERE nickname = '{name}' and time >= {int(time.time())-604800} GROUP BY workout")
+                   f"WHERE nickname = '{name}' and time >= {time_now - time_slot} GROUP BY workout")
     results = cursor.fetchall()
     result = {}
     for i in results:
