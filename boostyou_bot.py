@@ -14,11 +14,13 @@ bot = telebot.TeleBot(config.TOKEN)
 def start(message):
     bot.send_message(message.chat.id, 'Список доступных комманд /help')
 
+@bot.message_handler(commands=['about'])
+def start(message):
+    bot.send_message(message.chat.id, 'Ссылка на репозиторий проекта https://github.com/Nrj-ex/boostyou_bot')
 
 @bot.message_handler(commands=['help'])
 def start(message):
-    commands = '/my_stats\n/my_stats_week\n/all_stats\n/all_stats_week'
-    # bot.send_message(message.chat.id, 'Список команд:\n/sit_up\n/random_workout')
+    commands = '/my_stats\n/my_stats_week\n/all_stats\n/all_stats_week\n/about'
     bot.send_message(message.chat.id, f'Умею запоминать упражнения которые'
                                       f' вы выполнили и выводить статистику\nСписок доcтупных '
                                       f'комманд:\n{commands}')
