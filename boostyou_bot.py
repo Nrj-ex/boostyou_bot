@@ -83,4 +83,4 @@ def parse_text(message):
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, interval=1)
+    bot.polling(none_stop=True, interval=10)
