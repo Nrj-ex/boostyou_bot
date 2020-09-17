@@ -10,7 +10,9 @@ bot = telebot.TeleBot(config.TOKEN)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.chat.id, 'Список доступных комманд /help')
+    keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+    keyboard.row('/help')
+    bot.send_message(message.chat.id, 'Список доступных комманд: /help', reply_markup=keyboard)
 
 
 @bot.message_handler(commands=['about'])
@@ -22,9 +24,13 @@ def start(message):
 def start(message):
     commands = ['/my_stats', '/my_stats_week', '/all_stats',
                 '/all_stats_week', '/about']
+    keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+    keyboard.row(*commands)
     bot.send_message(message.chat.id, f'Умею запоминать упражнения которые'
                                       f' вы выполнили и выводить статистику\nСписок доcтупных '
-                                      f'комманд:\n'+'\n'.join(commands))
+                                      f'комманд:\n'+'\n'.join(commands), reply_markup=keyboard)
+
+
 
 
 @bot.message_handler(commands=['my_stats'])
