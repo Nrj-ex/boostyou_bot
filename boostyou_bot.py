@@ -102,7 +102,7 @@ def parse_text(message):
             keyboard.row('/kick_me', 'Спасибо хватит!')
             if client_status[client_id] in client_status:
                 del client_status[client_id]
-            bot.send_message(client_id, 'Я запомнил ;)')
+            bot.send_message(client_id, f'Я запомнил, напишу через {timeout} минут ;)')
             time.sleep(int(timeout) * 60)
             bot.send_message(client_id, 'Встань, разомнись, следи за осанкой! ;)',
                              reply_markup=keyboard)
