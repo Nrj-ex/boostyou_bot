@@ -91,12 +91,12 @@ def parse_text(message):
             keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
             keyboard.row('/kick_me', 'Спасибо хватит!')
             time.sleep(int(timeout * 60))
-            bot.send_message(message.chat.id, 'Встань, разомнись, следи за осанкой! ;)',
+            bot.send_message(client_id, 'Встань, разомнись, следи за осанкой! ;)',
                              reply_markup=keyboard)
         else:
             keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
             keyboard.row('/kick_me', 'Спасибо хватит!')
-            bot.send_message(message.chat.id, 'Ты тупой? написано же число от 1 до 200\n'
+            bot.send_message(client_id, 'Ты тупой? написано же число от 1 до 200\n'
                                               '*ворчит* безмозглый кусок мяса...',
                              reply_markup=keyboard)
         del client_status[client_id]
