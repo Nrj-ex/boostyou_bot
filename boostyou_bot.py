@@ -1,4 +1,5 @@
 import telebot
+import time
 from bot_function import search_workout
 from bot_function import get_my_stat
 from bot_function import get_all_stats
@@ -6,7 +7,7 @@ import config
 
 # @Boostyou_bot
 bot = telebot.TeleBot(config.TOKEN)
-keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+client_status = {}
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -83,6 +84,32 @@ def show_all_stats(message):
 @bot.message_handler(content_types=["text"])
 def parse_text(message):
     search_workout(message)
+    client_id = message.from_user.id
+    if client_id in client_status and client_status[client_id] == 'wait_for_data':
+        timeout = message.text
+        if timeout.isdigit() and int(timeout) < 200:
+            keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+            keyboard.row('/kick_me', 'Спасибо хватит!')
+            time.sleep(int(timeout * 60))
+            bot.send_message(message.chat.id, 'Встань, разомнись, следи за осанкой! ;)',
+                             reply_markup=keyboard)
+        else:
+            keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+            keyboard.row('/kick_me', 'Спасибо хватит!')
+            bot.send_message(message.chat.id, 'Ты тупой? написано же число от 1 до 200\n'
+                                              '*ворчит* безмозглый кусок мяса...',
+                             reply_markup=keyboard)
+        del client_status[client_id]
+
+
+@bot.message_handler(commands=['kick_me'])
+def start(message):
+    client_id = message.from_user.id
+    client_status[client_id] = 'wait_for_data'
+    keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+    keyboard.row('30', '60', '90')
+    bot.send_message(client_id, 'Через сколько минут вас пнуть? (не более 200)',
+                     reply_markup=keyboard)
 
 
 if __name__ == '__main__':
