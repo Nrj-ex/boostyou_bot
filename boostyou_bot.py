@@ -109,7 +109,8 @@ def parse_text(message):
             bot.send_message(client_id, 'Ты тупой? написано же число от 1 до 200\n'
                                               '*ворчит* безмозглый кусок мяса...',
                              reply_markup=keyboard)
-        del client_status[client_id]
+        if client_status[client_id] in client_status:
+            del client_status[client_id]
 
 
 
