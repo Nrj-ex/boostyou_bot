@@ -16,7 +16,6 @@ def search_workout(message):
     # разбить по пробелу
     for i in split_text:
         rand_work = i.split()
-        print(rand_work)
     # Есть ли разбитом сообщении упражнение и число
         if len(rand_work) == 2:
             # проверять отлько сообщения из 2 составляющих
@@ -71,7 +70,6 @@ def get_all_stats(time_slot=None, db_name=DB_NAME):
     names = cursor.fetchall()
     all_stats = {}
     for name in names:
-        print(name[0])
         all_stats[name[0]] = get_my_stat(name[0], time_slot)
     return all_stats
 
