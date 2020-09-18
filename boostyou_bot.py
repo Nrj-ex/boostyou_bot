@@ -100,7 +100,7 @@ def parse_text(message):
         if timeout.isdigit() and int(timeout) < 200:
             keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
             keyboard.row('/kick_me', 'Спасибо хватит!')
-            time.sleep(int(timeout ))
+            time.sleep(int(timeout * 60))
             bot.send_message(client_id, 'Встань, разомнись, следи за осанкой! ;)',
                              reply_markup=keyboard)
         else:
@@ -116,4 +116,4 @@ def parse_text(message):
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, interval=1)
+    bot.polling(none_stop=True, interval=10)
