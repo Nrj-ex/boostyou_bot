@@ -100,6 +100,8 @@ def parse_text(message):
         if timeout.isdigit() and int(timeout) < 200:
             keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
             keyboard.row('/kick_me', 'Спасибо хватит!')
+            if client_status[client_id] in client_status:
+                del client_status[client_id]
             time.sleep(int(timeout) * 60)
             bot.send_message(client_id, 'Встань, разомнись, следи за осанкой! ;)',
                              reply_markup=keyboard)
@@ -109,8 +111,7 @@ def parse_text(message):
             bot.send_message(client_id, 'Ты тупой? написано же число от 1 до 200\n'
                                               '*ворчит* безмозглый кусок мяса...',
                              reply_markup=keyboard)
-        if client_status[client_id] in client_status:
-            del client_status[client_id]
+
 
 
 
