@@ -81,6 +81,16 @@ def show_all_stats(message):
     bot.send_message(message.chat.id, text_message)
 
 
+@bot.message_handler(commands=['kick_me'])
+def kick_me(message):
+    client_id = message.from_user.id
+    client_status[client_id] = 'wait_for_data'
+    keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+    keyboard.row('30', '60', '90')
+    bot.send_message(client_id, 'Через сколько минут вас пнуть? (не более 200)',
+                     reply_markup=keyboard)
+
+
 @bot.message_handler(content_types=["text"])
 def parse_text(message):
     search_workout(message)
@@ -90,7 +100,7 @@ def parse_text(message):
         if timeout.isdigit() and int(timeout) < 200:
             keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
             keyboard.row('/kick_me', 'Спасибо хватит!')
-            time.sleep(int(timeout * 60))
+            time.sleep(int(timeout ))
             bot.send_message(client_id, 'Встань, разомнись, следи за осанкой! ;)',
                              reply_markup=keyboard)
         else:
@@ -102,15 +112,8 @@ def parse_text(message):
         del client_status[client_id]
 
 
-@bot.message_handler(commands=['kick_me'])
-def start(message):
-    client_id = message.from_user.id
-    client_status[client_id] = 'wait_for_data'
-    keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
-    keyboard.row('30', '60', '90')
-    bot.send_message(client_id, 'Через сколько минут вас пнуть? (не более 200)',
-                     reply_markup=keyboard)
+
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, interval=5)
+    bot.polling(none_stop=True, interval=1)
