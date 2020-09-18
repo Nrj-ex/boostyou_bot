@@ -100,7 +100,7 @@ def parse_text(message):
         if timeout.isdigit() and int(timeout) < 200:
             keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
             keyboard.row('/kick_me', 'Спасибо хватит!')
-            if client_status[client_id] in client_status:
+            if client_id in client_status:
                 del client_status[client_id]
             bot.send_message(client_id, f'Я запомнил, напишу через {timeout} минут ;)')
             time.sleep(int(timeout) * 60)
