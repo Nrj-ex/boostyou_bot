@@ -25,7 +25,7 @@ def search_workout(message):
                     id = workout_bd['synonyms'][j]
                     rand_work.remove(j)
                     count = str(rand_work[0])
-                    if count.isdigit():
+                    if count.isdigit() and int(count) < 1000:
                         user = message.from_user.username
                         date = str(message.date)
                         chatid = str(message.chat.id)
