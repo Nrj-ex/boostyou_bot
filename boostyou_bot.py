@@ -29,7 +29,7 @@ def start(message):
 @bot.message_handler(commands=['help'])
 def start(message):
     commands = ['/my_stats', '/my_stats_week', '/all_stats',
-                '/all_stats_week', '/kick_me' '/about']
+                '/all_stats_week', '/kick_me', '/about']
     bot.send_message(message.chat.id, f'Умею запоминать упражнения которые'
                                       f' вы выполнили и выводить статистику\nСписок доcтупных '
                                       f'комманд:\n'+'\n'.join(commands))
