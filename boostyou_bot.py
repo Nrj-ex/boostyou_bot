@@ -18,16 +18,18 @@ def start(message):
 
 @bot.message_handler(commands=['about'])
 def start(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
-    keyboard.row('/help')
-    bot.send_message(message.chat.id, 'Ссылка на репозиторий проекта '
-                                      'https://github.com/Nrj-ex/boostyou_bot', reply_markup=keyboard)
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    url_button = telebot.types.InlineKeyboardButton(text='link to the project',
+                                                    url='https://github.com/Nrj-ex/boostyou_bot')
+    keyboard.add(url_button)
+    bot.send_message(message.chat.id, 'Project information and suggestions on github',
+                     reply_markup=keyboard)
 
 
 @bot.message_handler(commands=['help'])
 def start(message):
     commands = ['/my_stats', '/my_stats_week', '/all_stats',
-                '/all_stats_week', '/about']
+                '/all_stats_week', '/kick_me' '/about']
     #keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
     #keyboard.row(*commands)
     bot.send_message(message.chat.id, f'Умею запоминать упражнения которые'
@@ -119,4 +121,4 @@ def parse_text(message):
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, interval=10)
+    bot.polling(none_stop=True, interval=5)
