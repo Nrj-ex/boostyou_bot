@@ -7,6 +7,11 @@ workout.json - база синонимов
 config.py - содержит настройки
 Не реализован первый запуск бота(если нет db её нужно будет создать в ручную)
 Доступные функции:
+/help
+/about
 /my_stats
+/my_stats_week
 /all_stats
+/all_stats_week
+/kick_me
 
